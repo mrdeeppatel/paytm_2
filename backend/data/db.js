@@ -1,6 +1,5 @@
 const mongoose = require("mongoose")
 const { mongoURL } = require("../config")
-const { required } = require("zod/mini")
 // console.log(mongoURL)
 
 

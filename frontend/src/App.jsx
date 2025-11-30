@@ -1,13 +1,9 @@
 // import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { SignUp } from "../mainPages/signup"
-import { SignIn } from "../mainPages/signin"
-function Home() {
+import { SignUp } from "../pages/signup"
+import { SignIn } from "../pages/signin"
+import { Home } from "../pages/home"
 
-  return <div className="text-3xl font-bold text-pink-600" >
-    HOME
-  </div>
-}
 function App() {
 
   return <>
