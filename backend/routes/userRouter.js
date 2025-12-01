@@ -110,7 +110,7 @@ userRouter.post("/signin", async (req, res) => {
         jwt.verify(token, JWT_SECRET)
 
     } catch (error) {
-        return res.json({
+        return res.status(403).json({
             MSG: "Invalid token ",
             Error_IN: "userRouter.js -> userRouter.post/signin"
         })
