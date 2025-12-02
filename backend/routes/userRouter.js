@@ -94,7 +94,7 @@ userRouter.post("/signin", async (req, res) => {
         })
     }
 
-    var token = jwt.sign({ email }, JWT_SECRET)
+    const token = jwt.sign({ email }, JWT_SECRET)
     console.log(token)
 
     // const result = jwt.verify(token, JWT_SECRET, (err) => {
@@ -118,7 +118,7 @@ userRouter.post("/signin", async (req, res) => {
 
     res.json({
         MSG: "Login Successful",
-        token
+        token: "Bearer " + token
     })
 
 })
@@ -143,7 +143,7 @@ userRouter.put("/user", async (req, res) => {
         })
 
     }
-    const val = await User.updateOne({ "email": req.body.tokenEmail }, req.body)
+    const val = await User.updateOne({ "email": req.tokenEmail }, req.body)
 
     // if body have email that meanse the email got updated
     // So creating a new token 
@@ -173,18 +173,26 @@ userRouter.put("/user", async (req, res) => {
 // Search user bases on user name
 userRouter.get("/bulk", async (req, res) => {
 
-    // If threis a filter or else empty string
-    const filter = req.query.filter || ""
+    //There should be a token check for the user 
+    //If the user is valid or not using token  
 
+    // If threis a filter or else empty string
+
+    const filter = req.query.filter || ""
+    console.log(filter)
     // $options : i means case insencetive
     const result = await User.find({
+
         '$or': [
 
             { firstName: { '$regex': `^${filter}`, '$options': 'i' } },
-            { email: { '$regex': `^${filter}`, '$options': 'i' } }]
-    })
+            { email: { '$regex': `^${filter}`, '$options': 'i' } }],
+        email: { "$ne": req.tokenEmail }
 
-    console.log(result)
+    }
+    )
+
+    console.log(req.tokenEmail)
     res.json({
         data: result.map(user => ({
 
@@ -201,7 +209,7 @@ userRouter.post("/check", (req, res) => {
 
     res.json({
         MSG: "Token is valid",
-        "Email": req.body.tokenEmail
+        "Email": req.tokenEmail
     })
 })
 module.exports = { userRouter }

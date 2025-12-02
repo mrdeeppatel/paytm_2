@@ -1,4 +1,5 @@
 import axios from "axios"
+import { getToken } from "../haplers/haplerFunctions"
 
 
 
@@ -50,7 +51,32 @@ const signUpApi = ({ firstName, email, password }) => {
 }
 
 
+const getAllUserApi = async ({ setUserList, filter }) => {
+
+    const token = getToken().split(" ")[1]
+
+    if (!token) {
+        alert("No Token <-> api.js")
+        return
+    }
+    await axios.get("http://localhost:3000/api/v1/user/bulk?filter="+filter , {
+        "headers": {
+            "token": "Bearer " + token
+        }
+    }).then(res => {
+        console.log("Bulk uesr API response")
+
+        setUserList(res.data.data)
+
+    }).catch(err => {
+        console.log("Error While calling Bulk user API")
+        console.log(err.response.data)
+    })
+
+}
+
 export {
     signInApi,
-    signUpApi
+    signUpApi,
+    getAllUserApi
 }

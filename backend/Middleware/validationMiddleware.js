@@ -54,7 +54,7 @@ const userMiddleware = (req, res, next) => {
     //So the email gets overwriten 
     // req.body["email"] = email
 
-    req.body["tokenEmail"] = email
+    req.tokenEmail = email
 
     next()
 

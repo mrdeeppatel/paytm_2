@@ -24,12 +24,19 @@ const SignIn = () => {
                     </div>
                     <div className="flex justify-center">
                         <button type="submit" className=" my-5 cursor-pointer hover:bg-[#2A2A2A]  border w-4/6 p-3 text-white bg-[#212121]"
-                            onClick={() => { signInApi({email,password}) }}>
+                            onClick={() => { signInApi({ email, password }) }}>
                             SignIn</button>
                     </div>
+                    <input onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            console.log("Enter")
+                        }
+                    }} />
 
                     <div className="flex justify-center py-3">
-                        <p className="w-4/6 px-1">Already a coustomer? <u>click here</u></p>
+                        <p className="w-4/6 px-1">Not a user?
+                            <u><a href="http://localhost:5173/signup">click here</a></u>
+                        </p>
                     </div>
                 </div>
             </Card>

@@ -45,7 +45,13 @@ const SignUp = () => {
 
                     </div>
                     <div className="flex justify-center py-3">
-                        <p className="w-4/6 px-1">Already a coustomer? <u>click here</u></p>
+                        <p className="w-4/6 px-1">Already a user? <u>
+
+                            <a href="http://localhost:5173/signin">
+                                click here
+                            </a>
+
+                        </u></p>
                     </div>
 
                 </div>
