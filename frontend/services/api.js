@@ -3,7 +3,7 @@ import { getToken } from "../haplers/haplerFunctions"
 
 
 
-const signInApi = ({ email, password }) => {
+const signInApi = async ({ email, password }) => {
 
     axios.post("http://localhost:3000/api/v1/user/signin", {
         email,
@@ -50,7 +50,24 @@ const signUpApi = ({ firstName, email, password }) => {
     })
 }
 
+const getUserDetails = async ({setUserDetails}) => {
+    const token = getToken().split(" ")[1]
 
+    if (!token) {
+        alert("No Token <-> api.js")
+        return
+    }
+
+    axios.get("http://localhost:3000/api/v1/user/userdetails", {
+        "headers": {
+            "token": "Bearer " + token
+        }
+    }).then(res => {
+        setUserDetails(res.data.userDetails)
+        console.log(res.data.userDetails)
+
+    })
+}
 const getAllUserApi = async ({ setUserList, filter }) => {
 
     const token = getToken().split(" ")[1]
@@ -59,7 +76,7 @@ const getAllUserApi = async ({ setUserList, filter }) => {
         alert("No Token <-> api.js")
         return
     }
-    await axios.get("http://localhost:3000/api/v1/user/bulk?filter="+filter , {
+    await axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter, {
         "headers": {
             "token": "Bearer " + token
         }
@@ -78,5 +95,6 @@ const getAllUserApi = async ({ setUserList, filter }) => {
 export {
     signInApi,
     signUpApi,
-    getAllUserApi
+    getAllUserApi,
+    getUserDetails
 }

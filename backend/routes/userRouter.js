@@ -126,7 +126,31 @@ userRouter.post("/signin", async (req, res) => {
 //To Check Token
 userRouter.use(userMiddleware)
 
+userRouter.get("/userdetails", async (req, res) => {
 
+    const email = req.tokenEmail
+    const userDetails = await User.findOne({
+        email
+    })
+
+    if (!userDetails) {
+
+        return res.status(403).json({
+            MSG: "Error while getting user Details",
+            Error: "Incoorect email in token",
+            Error_IN: "userRouter.js -> userRouter.get/userdetails"
+        })
+    }
+    res.json({
+        MSG: "User Details",
+        userDetails: {
+            firstName: userDetails.firstName,
+            email: userDetails.email
+
+        }
+    })
+
+})
 
 userRouter.put("/user", async (req, res) => {
     //IF WE ARE UPDATING THE email WE NEED TO GENRATE NEW JWT TOKEN FOR THAT

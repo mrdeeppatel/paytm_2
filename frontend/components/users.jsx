@@ -2,33 +2,7 @@ import { useEffect, useState } from "react"
 import { data } from "react-router-dom"
 import { getAllUserApi } from "../services/api"
 
-const Users = () => {
-
-    const [filter, setFilter] = useState("")
-    // API CALL FOR Usres List
-    const [userList, setUserList] = useState([])
-    useEffect(() => {
-
-        getAllUserApi({ setUserList, filter })
-    }, [])
-
-
-    //Debouncing the filter api call
-    //until user stops typing
-    useEffect(() => {
-        const timer = setTimeout(() => {
-
-            getAllUserApi({ setUserList, filter })
-        }, 500)
-
-        return () => {
-            clearTimeout(timer)
-        }
-
-    }, [filter])
-
-
-
+const Users = ({ userList, setFilter }) => {
 
 
     return <>
