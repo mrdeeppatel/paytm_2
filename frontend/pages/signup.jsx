@@ -11,10 +11,6 @@ const SignUp = () => {
     const [email, useEmail] = useState("")
     const [password, usePassword] = useState("")
     const [confirmPassword, useConfirmPassword] = useState("")
-    console.log(firstName)
-    console.log(email)
-    console.log(password)
-    console.log(confirmPassword)
 
     return (
         <div className="flex justify-center items-center h-screen ">

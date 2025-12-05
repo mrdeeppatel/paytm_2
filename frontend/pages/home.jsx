@@ -35,9 +35,9 @@ const Home = () => {
 
     useCheckForToken()
     return <>
-        <Header appName={"LocoPay"} userName={`${userDetails.firstName}`} />
+        <Header appName={"LocoPay"} userName={userDetails.firstName ? userDetails.firstName : ""} />
         <div className="mx-6">
-            <Ballance ballance={"20,00,00,000"} />
+            <Ballance ballance={userDetails.balance ? userDetails.balance : ""} />
             <Users userList={userList} setFilter={setFilter} />
         </div>
     </>

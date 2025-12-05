@@ -9,11 +9,8 @@ const signInApi = async ({ email, password }) => {
         email,
         password
     }).then((res) => {
-        console.log("Response -> ")
-        console.log(res.data)
 
         if (res.data.token) {
-            alert("New token -> " + res.data.token)
             document.cookie = `token=${res.data.token}`
             //doesn't add link to history and uses can not go back using back button
             // window.location.replace("http://localhost:5173/home")
@@ -23,8 +20,7 @@ const signInApi = async ({ email, password }) => {
 
         }
     }).catch((err) => {
-        console.log("ERROR -> ")
-        console.log(err.response.data)
+        alert(err.response.data.MSG)
 
     })
 
@@ -38,19 +34,17 @@ const signUpApi = ({ firstName, email, password }) => {
         password
     }).then((res) => {
 
-        console.log(res.data)
-
         //Replacing this signup page with signin page 
         window.location.replace("http://localhost:5173/signin")
 
     }).catch((err) => {
 
-        console.log(err.response.data)
+        alert(err.response.data.MSG)
 
     })
 }
 
-const getUserDetails = async ({setUserDetails}) => {
+const getUserDetails = async ({ setUserDetails }) => {
     const token = getToken().split(" ")[1]
 
     if (!token) {
@@ -64,8 +58,6 @@ const getUserDetails = async ({setUserDetails}) => {
         }
     }).then(res => {
         setUserDetails(res.data.userDetails)
-        console.log(res.data.userDetails)
-
     })
 }
 const getAllUserApi = async ({ setUserList, filter }) => {
@@ -73,7 +65,7 @@ const getAllUserApi = async ({ setUserList, filter }) => {
     const token = getToken().split(" ")[1]
 
     if (!token) {
-        alert("No Token <-> api.js")
+        alert("Signin again")
         return
     }
     await axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter, {
@@ -81,20 +73,38 @@ const getAllUserApi = async ({ setUserList, filter }) => {
             "token": "Bearer " + token
         }
     }).then(res => {
-        console.log("Bulk uesr API response")
-
         setUserList(res.data.data)
 
     }).catch(err => {
-        console.log("Error While calling Bulk user API")
-        console.log(err.response.data)
+        alert(err.response.data.MSG)
     })
 
+}
+
+const transferMoney = async ({ transferTo, amount }) => {
+
+    const token = getToken().split(" ")[1]
+
+    await axios.post("http://localhost:3000/api/v1/account/transfer", {
+        transferTo,
+        amount
+
+    }, {
+        "headers": {
+            "token": "Bearer " + token
+        }
+    }).catch((err) => {
+
+        alert(err.response.data.MSG)
+    }).then((res) => {
+        alert(res.data.MSG)
+    })
 }
 
 export {
     signInApi,
     signUpApi,
     getAllUserApi,
-    getUserDetails
+    getUserDetails,
+    transferMoney
 }

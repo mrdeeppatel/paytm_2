@@ -28,7 +28,7 @@ accountRouter.get("/balance", async (req, res) => {
 
 accountRouter.post("/transfer", async (req, res) => {
 
-    const transferFrom = req.body.email
+    const transferFrom = req.tokenEmail
     const transferTo = req.body.transferTo
     const amount = req.body.amount
 
@@ -40,13 +40,13 @@ accountRouter.post("/transfer", async (req, res) => {
     const result = await transferFund(transferTo, transferFrom, amount)
 
     console.log(result)
-    if (result.success) {   
+    if (result.success) {
         res.json({
-            message: "Transfer successful"
+            MSG: "Transfer successful"
         })
     } else {
         res.status(411).json({
-            message: result.msg
+            MSG: result.MSG
         })
     }
 })
@@ -71,22 +71,22 @@ const transferFund = async (transferTo, transferFrom, transferAmount) => {
             console.log("Sender Not found -> accountRought -> transferFund")
             return {
                 success: false,
-                msg: "Sender Not found -> accountRought -> transferFund"
+                MSG: "Sender Not found -> accountRought -> transferFund"
             }
         }
         if (!reciverAcc) {
             console.log("Reciver Not found -> accountRought -> transferFund")
             return {
                 success: false,
-                msg: "Reciver Not found -> accountRought -> transferFund"
+                MSG: "Reciver Not found -> accountRought -> transferFund"
             }
         }
 
 
-        if (transferAmount < 0) {
+        if (transferAmount <= 0) {
             return {
                 success: false,
-                msg: "Transfer amount cann't be negative"
+                MSG: "Transfer amount cann't be negative or zero"
             }
         }
 
@@ -96,7 +96,7 @@ const transferFund = async (transferTo, transferFrom, transferAmount) => {
             console.log("Sender Dont have enough money to transfer")
             return {
                 success: false,
-                msg: "Sender Dont have enough money to transfer"
+                MSG: "Sender Dont have enough money to transfer"
             }
         }
 
@@ -140,7 +140,7 @@ const transferFund = async (transferTo, transferFrom, transferAmount) => {
         console.log(err)
         return {
             success: false,
-            msg: "Error in Transection"
+            MSG: "Error in Transection"
         }
     }
 

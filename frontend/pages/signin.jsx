@@ -9,12 +9,10 @@ const SignIn = () => {
 
     const [email, useEmail] = useState("")
     const [password, usePassword] = useState("")
-    console.log(email)
-    console.log(password)
     return (
         <div className="flex justify-center items-center h-screen ">
             <Card >
-                <div className="flex flex-col ">
+                <div className="flex flex-col  w-2xl">
 
                     <MainHeading mainHeadingText={"SignIn Component"} subHeadingText={"Signin Main Page"} />
                     {/* <SubHeading subText={"Signin Main Page"} /> */}
@@ -27,11 +25,7 @@ const SignIn = () => {
                             onClick={() => { signInApi({ email, password }) }}>
                             SignIn</button>
                     </div>
-                    <input onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            console.log("Enter")
-                        }
-                    }} />
+                
 
                     <div className="flex justify-center py-3">
                         <p className="w-4/6 px-1">Not a user?

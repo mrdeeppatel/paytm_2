@@ -88,8 +88,7 @@ userRouter.post("/signin", async (req, res) => {
     if (!doesExist) {
 
         return res.status(403).json({
-            MSG: "Error while logging",
-            Error: "User name or pass are incorrect",
+            MSG: "User name or pass are incorrect",
             Error_IN: "userRouter.js -> userRouter.post/signin"
         })
     }
@@ -133,6 +132,7 @@ userRouter.get("/userdetails", async (req, res) => {
         email
     })
 
+    console.log(userDetails)
     if (!userDetails) {
 
         return res.status(403).json({
@@ -141,12 +141,17 @@ userRouter.get("/userdetails", async (req, res) => {
             Error_IN: "userRouter.js -> userRouter.get/userdetails"
         })
     }
+
+    const userBallance = await Account.findOne({
+        _id: userDetails._id
+    })
+    console.log(userBallance)
     res.json({
         MSG: "User Details",
         userDetails: {
             firstName: userDetails.firstName,
-            email: userDetails.email
-
+            email: userDetails.email,
+            balance: userBallance.balance
         }
     })
 
