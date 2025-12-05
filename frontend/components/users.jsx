@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react"
-import { data } from "react-router-dom"
-import { getAllUserApi } from "../services/api"
+import { SendMoneyButton } from "./sendMonyButton"
 
 const Users = ({ userList, setFilter }) => {
 
@@ -17,11 +15,16 @@ const Users = ({ userList, setFilter }) => {
             <div className="flex-col mt-4">
                 {userList.map((e) => {
 
-                    return <div className="flex items-center gap-x-2 my-4" key={e.email}>
-                        <p className="flex border-2 rounded-full justify-center items-center h-8 w-8 ">{e.email[0]}</p>
-                        <p className="felx items-center">{e.email}</p>
-                        <p className="felx items-center">{e.firstName}</p>
+                    return <div className="flex justify-between pr-20" key={e.email}>
+
+                        <div className="flex items-center gap-x-2 my-4">
+                            <p className="flex border-2 rounded-full justify-center items-center h-8 w-8 ">{e.email[0]}</p>
+                            <p className="felx items-center">{e.email}</p>
+                            <p className="felx items-center">{e.firstName}</p>
+                        </div>
+                        <SendMoneyButton userEmail={e.email} />
                     </div>
+
                 }
                 )}
             </div>

@@ -1,6 +1,6 @@
 const MainHeading = ({ mainHeadingText, subHeadingText }) => {
 
-    return <div className="  w-2xl text-center flex flex-col justify-center  py-6 ">
+    return <div className="  text-center flex flex-col justify-center  py-6 ">
         <div className="text-[#212121] text-2xl font-bold  ">
             {mainHeadingText}
 

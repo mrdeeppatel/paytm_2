@@ -19,7 +19,7 @@ const SignUp = () => {
     return (
         <div className="flex justify-center items-center h-screen ">
             <Card >
-                <div className="flex flex-col  ">
+                <div className="flex flex-col  w-2xl ">
 
                     <MainHeading mainHeadingText={"SignUp Component"} subHeadingText={"SignUp Main Page"} />
 
