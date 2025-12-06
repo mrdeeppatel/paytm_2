@@ -1,6 +1,6 @@
 const express = require("express")
 const { User, Account } = require("../data/db")
-const { JWT_SECRET } = require("../config")
+const JWT_SECRET = process.env.JWT_SECRET;
 const { signupValidation, signInValidation, updateValidation } = require("../Middleware/zod")
 const jwt = require("jsonwebtoken")
 const { userMiddleware } = require("../Middleware/validationMiddleware")
