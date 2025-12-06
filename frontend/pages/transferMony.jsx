@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MainHeading } from "../components/mainHeading"
 import { transferMoney } from "../services/api"
-
+import { useNavigate } from "react-router-dom"
 const TransferMoney = () => {
+    const navigate = useNavigate()
     const [amount, setAmount] = useState(0)
 
     if (!(amount.toString().match(/^\d+$/))) {
@@ -11,9 +12,12 @@ const TransferMoney = () => {
     const params = new URLSearchParams(window.location.search)
 
     // If URL doesn't have id parameter then redirect the user to home page
-    if (!params.has("id") || !(/^[^\s@]+@[^\s@0-9]+\.[^\s@0-9]+$/.test(params.get("id")))) {
-        window.location.replace("http://localhost:5173/")
-    }
+    useEffect(() => {
+        if (!params.has("id") || !(/^[^\s@]+@[^\s@0-9]+\.[^\s@0-9]+$/.test(params.get("id")))) {
+            // window.location.replace("http://localhost:5173/")
+            navigate("/home")
+        }
+    }, [])
 
     return <>
         <div className="flex justify-around items-center h-screen bg-amber-100">
@@ -40,7 +44,8 @@ const TransferMoney = () => {
                             transferMoney({ amount, transferTo: params.get("id") })
                         }}>Send</button>
                         <button className="mt-8 bg-gray-300 text-xl border-2 px-2 cursor-pointer rounded-2xl" onClick={() => {
-                            window.location.replace("http://localhost:5173/")
+                            // window.location.replace("http://localhost:5173/")
+                            navigate("/")
                         }}>Back</button>
                     </div>
                 </div>

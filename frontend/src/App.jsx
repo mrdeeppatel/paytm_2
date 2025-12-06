@@ -12,8 +12,8 @@ function App() {
       <Routes>
         <Route path="*" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route path="transfer" element={<TransferMoney />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/transfer" element={<TransferMoney />} />
       </Routes>
     </BrowserRouter>
   </>

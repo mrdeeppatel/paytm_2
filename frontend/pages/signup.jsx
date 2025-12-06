@@ -3,10 +3,10 @@ import { Card } from "../components/card"
 import { InputBoxPassword, InputBox } from "../components/inputBox"
 import { MainHeading } from "../components/mainHeading"
 import { signUpApi } from "../services/api"
-
+import { useNavigate } from "react-router-dom"
 
 const SignUp = () => {
-
+    const navigate = useNavigate()
     const [firstName, useFristName] = useState("")
     const [email, useEmail] = useState("")
     const [password, usePassword] = useState("")
@@ -35,19 +35,15 @@ const SignUp = () => {
                                     return
                                 }
 
-                                signUpApi({ firstName, email, password })
+                                signUpApi({ firstName, email, password,navigate })
                             }}>
                             SignUp</button>
 
                     </div>
                     <div className="flex justify-center py-3">
-                        <p className="w-4/6 px-1">Already a user? <u>
-
-                            <a href="http://localhost:5173/signin">
-                                click here
-                            </a>
-
-                        </u></p>
+                        <button className="flex w-4/6 px-1 cursor-pointer" onClick={() => {
+                            navigate("/signin")
+                        }}>Already a user? <u>click here</u></button>
                     </div>
 
                 </div>

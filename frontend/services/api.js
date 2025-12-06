@@ -3,9 +3,9 @@ import { getToken } from "../haplers/haplerFunctions"
 
 
 
-const signInApi = async ({ email, password }) => {
+const signInApi = async ({ email, password, navigate }) => {
 
-    axios.post("http://localhost:3000/api/v1/user/signin", {
+    axios.post("https://paytm-2-nh4j.onrender.com/api/v1/user/signin", {
         email,
         password
     }).then((res) => {
@@ -16,7 +16,8 @@ const signInApi = async ({ email, password }) => {
             // window.location.replace("http://localhost:5173/home")
 
             // Adds the link to the history and user can go back to the privious page using back button
-            window.location.href = "http://localhost:5173/home"
+            //window.location.href = "http://localhost:5173/home"
+            navigate("/home")
 
         }
     }).catch((err) => {
@@ -26,17 +27,17 @@ const signInApi = async ({ email, password }) => {
 
 }
 
-const signUpApi = ({ firstName, email, password }) => {
+const signUpApi = ({ firstName, email, password, navigate }) => {
 
-    axios.post("http://localhost:3000/api/v1/user/signup", {
+    axios.post("https://paytm-2-nh4j.onrender.com/api/v1/user/signup", {
         firstName,
         email,
         password
     }).then((res) => {
 
         //Replacing this signup page with signin page 
-        window.location.replace("http://localhost:5173/signin")
-
+        // window.location.replace("http://localhost:5173/signin")
+        navigate("/signin")
     }).catch((err) => {
 
         alert(err.response.data.MSG)
@@ -52,7 +53,7 @@ const getUserDetails = async ({ setUserDetails }) => {
         return
     }
 
-    axios.get("http://localhost:3000/api/v1/user/userdetails", {
+    axios.get("https://paytm-2-nh4j.onrender.com/api/v1/user/userdetails", {
         "headers": {
             "token": "Bearer " + token
         }
@@ -68,7 +69,7 @@ const getAllUserApi = async ({ setUserList, filter }) => {
         alert("Signin again")
         return
     }
-    await axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter, {
+    await axios.get("https://paytm-2-nh4j.onrender.com/api/v1/user/bulk?filter=" + filter, {
         "headers": {
             "token": "Bearer " + token
         }
@@ -85,7 +86,7 @@ const transferMoney = async ({ transferTo, amount }) => {
 
     const token = getToken().split(" ")[1]
 
-    await axios.post("http://localhost:3000/api/v1/account/transfer", {
+    await axios.post("https://paytm-2-nh4j.onrender.com/api/v1/account/transfer", {
         transferTo,
         amount
 
