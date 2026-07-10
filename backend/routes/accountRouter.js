@@ -64,8 +64,8 @@ const transferFund = async (transferTo, transferFrom, transferAmount) => {
         // IT will find the user based on email and checjk if balance is sufficient then it wull return the sender or not
         // const senderAcc = await Account.findOne({ email: transferFrom , balance:{ $gte : transferAmount }})
 
-        const senderAcc = await Account.findOne({ email: transferFrom })
-        const reciverAcc = await Account.findOne({ email: transferTo })
+        const senderAcc = await Account.findOne({ email: transferFrom }).session(session)
+        const reciverAcc = await Account.findOne({ email: transferTo }).session(session)
 
         if (!senderAcc) {
             console.log("Sender Not found -> accountRought -> transferFund")
@@ -117,14 +117,22 @@ const transferFund = async (transferTo, transferFrom, transferAmount) => {
         //     { session }
         // )
 
+
+        const sender = await Account.findOneAndUpdate(
+            {
+                email: transferFrom,
+                balance: { $gte: transferAmount }
+            },
+            { $inc: { balance: -transferAmount } },
+            { session, new: true }
+        )
+        if (!sender) {
+            throw new Error("Insufficient balance");
+        }
+
         await Account.findOneAndUpdate(
             { email: transferTo },
             { $inc: { balance: transferAmount } },
-            { session }
-        )
-        await Account.findOneAndUpdate(
-            { email: transferFrom },
-            { $inc: { balance: -transferAmount } },
             { session }
         )
         console.log("---Transaction Ended---")
@@ -142,6 +150,8 @@ const transferFund = async (transferTo, transferFrom, transferAmount) => {
             success: false,
             MSG: "Error in Transection"
         }
+    } finally {
+        session.endSession();
     }
 
 }
